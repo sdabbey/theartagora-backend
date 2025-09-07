@@ -26,6 +26,10 @@ class OrderCreateView(generics.CreateAPIView):
     serializer_class = OrderSerializer
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 class ArtistOnboardingCreateView(generics.CreateAPIView):
     queryset = ArtistOnboarding.objects.all()
     serializer_class = ArtistOnboardingSerializer
@@ -33,7 +37,7 @@ class ArtistOnboardingCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         instance = serializer.save()
         try:
-            send_mail(
+            sent_count = send_mail(
                 subject="New Artist Onboarding Submission",
                 message=(
                     f"Alias: {instance.alias}\n"
@@ -44,8 +48,9 @@ class ArtistOnboardingCreateView(generics.CreateAPIView):
                     f"Bio:\n{instance.bio}"
                 ),
                 from_email=getattr(settings, "DEFAULT_FROM_EMAIL", None),
-                recipient_list=[ "samueldarko557@gmail.com" ],  # put your email here
-                fail_silently=True,
+                recipient_list=["samueldarko557@gmail.com"],
+                fail_silently=False,  # important!
             )
-        except Exception:
-            pass
+            logger.info("✅ Email sent successfully, count=%s", sent_count)
+        except Exception as e:
+            logger.error("❌ Email sending failed: %s", str(e))
