@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.templatetags.static import static
-from .models import Collection, Product, ProductSize, ProductDetail, ProductDimension, Order, OrderItem, ArtistOnboarding
+from .models import Collection, Product, ProductSize, ProductDetail, ProductDimension, Order, OrderItem, ArtistOnboarding, ExplorerSubscription
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -13,6 +13,7 @@ class ProductSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSize
         fields = ["id", "value"]
+
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -128,3 +129,8 @@ class ArtistOnboardingSerializer(serializers.ModelSerializer):
         if not attrs.get("agree_to_terms"):
             raise serializers.ValidationError("You must agree to the terms.")
         return attrs
+
+class ExplorerSubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExplorerSubscription
+        fields = ["id", "email", "special_requests", "created_at"]

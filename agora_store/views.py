@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Product, Collection, Order, ArtistOnboarding
-from .serializers import ProductSerializer, CollectionSerializer, OrderSerializer, ArtistOnboardingSerializer
+from .models import Product, Collection, Order, ArtistOnboarding, ExplorerSubscription
+from .serializers import ProductSerializer, CollectionSerializer, OrderSerializer, ArtistOnboardingSerializer, ExplorerSubscriptionSerializer
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -54,3 +54,27 @@ class ArtistOnboardingCreateView(generics.CreateAPIView):
             logger.info("✅ Email sent successfully, count=%s", sent_count)
         except Exception as e:
             logger.error("❌ Email sending failed: %s", str(e))
+
+
+logger = logging.getLogger(__name__)
+
+class ExplorerSubscriptionCreateView(generics.CreateAPIView):
+    queryset = ExplorerSubscription.objects.all()
+    serializer_class = ExplorerSubscriptionSerializer
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        try:
+            sent_count = send_mail(
+                subject="New Explorer Subscription",
+                message=(
+                    f"Email: {instance.email}\n"
+                    f"Special Requests: {instance.special_requests or 'None'}"
+                ),
+                from_email=getattr(settings, "DEFAULT_FROM_EMAIL", None),
+                recipient_list=["samueldarko557@gmail.com"],
+                fail_silently=False,
+            )
+            logger.info("✅ Subscription email sent, count=%s", sent_count)
+        except Exception as e:
+            logger.error("❌ Subscription email failed: %s", str(e))

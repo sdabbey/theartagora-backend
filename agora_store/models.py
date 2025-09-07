@@ -98,3 +98,11 @@ class ArtistOnboarding(models.Model):
 
     def __str__(self):
         return f"{self.display_name} ({self.alias})"
+    
+class ExplorerSubscription(models.Model):
+    email = models.EmailField(unique=True)
+    special_requests = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
