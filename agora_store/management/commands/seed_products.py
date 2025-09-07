@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from agora_store.models import Collection, Product, ProductSize, ProductDetail, ProductDimension
-from agora_store.data.curated_works import products  # if you put the dataset in shop/data/products.py
+from agora_store.data.products import products  # if you put the dataset in shop/data/products.py
 
 
 class Command(BaseCommand):

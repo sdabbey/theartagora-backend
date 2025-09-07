@@ -200,5 +200,6 @@ products = [
         ],
         "dimensions": ["Matching elastic closure and ribbon marker", "Expandable inner pocket"]
     }
+    
 
 ]
