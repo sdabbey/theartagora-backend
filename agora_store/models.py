@@ -83,3 +83,18 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity}x {self.product.name} (Order {self.order.id})"
+    
+
+class ArtistOnboarding(models.Model):
+    alias = models.CharField(max_length=150)  # your “Artist Alias”
+    email = models.EmailField()
+    display_name = models.CharField(max_length=255)
+    bio = models.TextField()
+    portfolio_url = models.URLField(blank=True, null=True)
+    preferred_medium = models.CharField(max_length=120, blank=True)
+    agree_to_terms = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.display_name} ({self.alias})"
