@@ -150,5 +150,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dehydrus223@gmail.com'
-EMAIL_HOST_PASSWORD = 'xibk inlg kqey eaxz'
-DEFAULT_FROM_EMAIL = "The Art Agora <no-reply@theartagora.com>"
+EMAIL_HOST_PASSWORD = 'xibkinlgkqeyeaxz'
+DEFAULT_FROM_EMAIL = "The Art Agora <dehydrus223@gmail.com>"
+
